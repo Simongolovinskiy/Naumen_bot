@@ -13,4 +13,9 @@ import ru.Simon.telegrambot.entities.Product;
 @RepositoryRestResource(collectionResourceRel = "clients", path = "clients")
 public interface ClientRepository extends JpaRepository<Client, Long>
 {
+    String GET_ALL_PRODUCT_QUERY = "from Product where id in (from OrderProduct where clientOrder.client.id = "
+            + ":clientId) ";
+
+    @Query(GET_ALL_PRODUCT_QUERY)
+    List<Product> getAllProduct(@Param("clientId") Long clientId);
 }
